@@ -6,15 +6,48 @@ const App = () => {
     count: 0,
   })
 
+
   countState.handleIncrement = () => {
     setCountState({ ...countState, count: countState.count + 1 })
   }
 
+  countState.handleDecrement = () => {
+    setCountState({ ...countState, count: countState.count - 1 })
+  }
+
+  const [userState, setUserState] = useState({
+    name: '',
+    dispName: ''
+  })
+
+  userState.handleInputChange = event => {
+    setUserState({ ...userState, [event.target.name]: event.target.value })
+  }
+
+  userState.handleSubmit = event => {
+    event.preventDefault()
+    setUserState({ ...userState, dispName: userState.name, name: ''})
+  }
 
   return (
     <>
       <h1>Count: {countState.count}</h1>
       <button onClick={countState.handleIncrement}>+</button>
+      <button onClick={countState.handleDecrement}>-</button>
+      <hr />
+      <h1>Name: {userState.dispName}</h1>
+      <form>
+        <p>
+          <label htmlFor="name">name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            onChange={userState.handleInputChange}
+            value={userState.name} />
+        </p>
+        <button onClick={userState.handleSubmit}>Submit</button>
+      </form>
     </>
   )
 }
